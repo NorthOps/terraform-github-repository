@@ -22,7 +22,7 @@ variable "visibility" {
 
   validation {
     condition     = contains(["public", "private", "internal"], var.visibility)
-    error_message = "Must be one of public, private or internal"
+    error_message = "Must be one of public, private or internal."
   }
 }
 
