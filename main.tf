@@ -17,10 +17,10 @@ resource "github_repository" "repository" {
   default_branch         = var.default_branch_name
 }
 
-resource "github_branch_protection" "repository_master" {
+resource "github_branch_protection" "repository" {
   count          = var.branch_protection_enabled == true ? 1 : 0
-  repository     = var.name
-  branch         = var.default_branch_name
+  repository_id  = github_repository.repository.id
+  pattern        = var.default_branch_name
   enforce_admins = var.enforce_admins
 
   required_status_checks {
@@ -37,15 +37,9 @@ resource "github_branch_protection" "repository_master" {
   depends_on = [github_repository.repository]
 }
 
-resource "github_team_repository" "admin_team_access" {
-  team_id    = var.admin_team
+resource "github_team_repository" "access" {
+  for_each   = var.team_access
+  team_id    = each.value["team_id"]
   repository = github_repository.repository.name
-  permission = "admin"
-}
-
-resource "github_team_repository" "developer_access" {
-  count      = var.admin_team_only ? 0 : 1
-  team_id    = var.developer_team
-  repository = github_repository.repository.name
-  permission = "push"
+  permission = each.value["access"]
 }
