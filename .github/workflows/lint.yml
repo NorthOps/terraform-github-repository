@@ -1,0 +1,13 @@
+---
+"on":
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    name: Lint Terraform
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hashicorp/setup-terraform@v1
+      - run: terraform fmt -recursive -check
