@@ -18,10 +18,10 @@ variable "homepage_url" {
 variable "visibility" {
   type        = string
   default     = "public"
-  description = "(optional) V isibility of the repository. Can be public, private or internal"
+  description = "(optional) Visibility of the repository. Can be public, private or internal"
 
   validation {
-    condition     = contains(["public","private","internal"], var.visibility)
+    condition     = contains(["public", "private", "internal"], var.visibility)
     error_message = "Must be one of public, private or internal"
   }
 }
