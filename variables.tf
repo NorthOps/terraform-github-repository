@@ -112,26 +112,20 @@ variable "required_approving_review_count" {
   description = "(optional) Require x number of approvals to satisfy branch protection requirements. If this is specified it must be a number between 1-6"
 }
 
-# Github Team Repostory
-variable "admin_team" {
-  type        = string
-  description = "Team ID that administers the repository"
-}
-
-variable "admin_team_only" {
-  type        = bool
-  description = "(optional) Disable developer team for this repository"
-  default     = false
-}
-
-variable "developer_team" {
-  type        = string
-  description = "(optional) Team ID that developers belong to"
-  default     = ""
-}
-
 variable "default_branch_name" {
   type        = string
   description = "(optional) Default branch name and the branch name with protection applied to it"
   default     = "main"
+}
+
+
+variable "team_access" {
+  type        = map
+  description = "A map of access to the repository"
+  default = {
+    admin = {
+      team_id = ""
+      access  = "admin"
+    }
+  }
 }
